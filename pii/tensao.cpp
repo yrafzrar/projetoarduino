@@ -16,7 +16,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 ZMPT101B voltageSensor(A0, 50.0); //detecta o sensor
 int led= 8;
 int buzzer = 3;
-
+float max = 100;
 
 void setup() {
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
@@ -48,9 +48,11 @@ void loop() {
   display.println("Sistema Protecao AC");
   display.print("Tensao: ");
   display.println(voltage);
-  display.println("Max config: 100 V");
+  display.print("Max config: ");
+  display.print(max);
+  display.println("V");
   Serial.println(voltage);
-  if (voltage>100) {
+  if (voltage > max) {
     tone(buzzer, 1000);
     digitalWrite(led,HIGH);
     display.setCursor(0,40);
