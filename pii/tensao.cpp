@@ -17,7 +17,7 @@ ZMPT101B voltageSensor(A0, 50.0); //detecta o sensor
 int led= 8;
 int buzzer = 3;
 float max = 100;
-int rele = 7;
+int rele = 12;
 
 void setup() {
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
