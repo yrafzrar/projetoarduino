@@ -17,12 +17,16 @@ ZMPT101B voltageSensor(A0, 50.0); //detecta o sensor
 int led= 8;
 int buzzer = 3;
 float max = 100;
+int relePin   = 7;
 
 void setup() {
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("Falha ao inicializar OLED"));
     for(;;);
   }
+  
+  pinMode(led, OUTPUT);
+  pinMode(relePin, OUTPUT);
   pinMode(buzzer, OUTPUT);
   Serial.begin(9600);
   voltageSensor.setSensitivity(SENSITIVITY);
@@ -53,6 +57,7 @@ void loop() {
   display.println("V");
   Serial.println(voltage);
   if (voltage > max) {
+    digitalWrite(relePin, LOW); 
     tone(buzzer, 1000);
     digitalWrite(led,HIGH);
     display.setCursor(0,40);
@@ -60,6 +65,8 @@ void loop() {
     display.print("EQUIPAMENTO DESLIGADO");
   }
   else{
+    
+    digitalWrite(relePin, HIGH);
     noTone(buzzer);
     digitalWrite(led, LOW);
   }
